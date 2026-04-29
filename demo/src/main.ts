@@ -71,9 +71,9 @@ const deadZoneElement = document.querySelector<HTMLInputElement>("#deadZone");
 const deadZoneValueElement = getElement("deadZoneValue");
 
 if (!("getGamepads" in navigator)) {
-  supportStatus.textContent = "Gamepad API is not available";
+  supportStatus.textContent = "Gamepad API is not available / Gamepad API は利用できません";
 } else {
-  supportStatus.textContent = "Gamepad API available";
+  supportStatus.textContent = "Gamepad API available / Gamepad API 利用可能";
 }
 
 if (deadZoneElement) {
@@ -124,7 +124,8 @@ function renderGamepads(): void {
   const gamepads = mapper.getConnectedGamepads();
 
   if (gamepads.length === 0) {
-    gamepadsElement.innerHTML = '<div class="muted">Press a button on a connected controller.</div>';
+    gamepadsElement.innerHTML =
+      '<div class="muted">Press a button on a connected controller. / 接続済みコントローラーのボタンを押してください。</div>';
     return;
   }
 
@@ -134,12 +135,12 @@ function renderGamepads(): void {
       element.className = "gamepad";
       element.innerHTML = `
         <strong>#${gamepad.index} ${escapeHtml(gamepad.id)}</strong>
-        <span class="muted">mapping: ${gamepad.mapping || "none"} / confidence: ${gamepad.confidence}</span>
+        <span class="muted">mapping / マッピング: ${gamepad.mapping || "none"} / confidence / 信頼度: ${gamepad.confidence}</span>
       `;
 
       const button = document.createElement("button");
       button.type = "button";
-      button.textContent = "Select";
+      button.textContent = "Select / 選択";
       button.addEventListener("click", () => mapper.selectGamepad(gamepad.index));
       element.append(button);
 
@@ -164,7 +165,7 @@ function renderAxes(): void {
   const gamepad = navigator.getGamepads?.()[mapper.getSelectedGamepad()?.index ?? -1];
 
   if (!gamepad) {
-    axesElement.innerHTML = '<div class="muted">No selected gamepad.</div>';
+    axesElement.innerHTML = '<div class="muted">No selected gamepad. / 選択中の gamepad はありません。</div>';
     return;
   }
 
